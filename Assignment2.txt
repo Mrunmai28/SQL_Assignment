@@ -1,0 +1,170 @@
+Table- department
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| dept_id      | int         | NO   | PRI | NULL    |       |
+| dep_name     | varchar(20) | YES  |     | NULL    |       |
+| dep_location | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+
+Table -employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+
+Table- salary_grade
+
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| grade      | int  | NO   | PRI | NULL    |       |
+| min_salary | int  | YES  |     | NULL    |       |
+| max_salary | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.28 sec)
+
+
+1.) From the following table return complete information about the employees.
+=>
+mysql> SELECT * FROM employees;
++--------+----------+-----------+------------+------------+----------+------------+---------+
+| emp_id | emp_name | job_name  | manager_id | hire_date  | salary   | commission | dept_id |
++--------+----------+-----------+------------+------------+----------+------------+---------+
+|      1 | Mrunmai  | Software  |       1101 | 2024-02-01 | 20000.00 |    2000.00 |     101 |
+|      2 | Priyanka | Technical |       1101 | 2024-02-11 | 20000.00 |    3000.00 |     101 |
+|      3 | Gajanan  | Arts      |       1102 | 2024-02-11 | 30000.00 |    5000.00 |     103 |
+|      4 | Meera    | Software  |       1101 | 2024-01-20 | 20000.00 |    2000.00 |     101 |
+|      5 | Pallavi  | Software  |       1101 | 2024-03-20 | 21000.00 |    1000.00 |     101 |
++--------+----------+-----------+------------+------------+----------+------------+---------+
+5 rows in set (0.17 sec)
+
+
+2.) From the following table, write a SQL query to find the salaries of all employees. Return salary.
+=>
+mysql> SELECT salary FROM employees;
++----------+
+| salary   |
++----------+
+| 20000.00 |
+| 20000.00 |
+| 30000.00 |
+| 20000.00 |
+| 21000.00 |
++----------+
+5 rows in set (0.00 sec)
+
+
+3.) From the following table, write a SQL query to find the unique designations of the employees. Return job name.
+=>
+mysql> SELECT DISTINCT job_name FROM employees;
++-----------+
+| job_name  |
++-----------+
+| Software  |
+| Technical |
+| Arts      |
++-----------+
+3 rows in set (0.01 sec)
+
+
+4.) From the following table, write a SQL query to list the employees’ name, increased their salary by 15%, and expressed as number of Dollars.
+=>
+mysql> SELECT emp_name, salary*1.15 AS increased_salary_in_dollars from employees;
++----------+-----------------------------+
+| emp_name | increased_salary_in_dollars |
++----------+-----------------------------+
+| Mrunmai  |                  23000.0000 |
+| Priyanka |                  23000.0000 |
+| Gajanan  |                  34500.0000 |
+| Meera    |                  23000.0000 |
+| Pallavi  |                  24150.0000 |
++----------+-----------------------------+
+5 rows in set (0.01 sec)
+
+
+5.)From the following table, write a SQL query to list the employee's name and job name as a format of "Employee & Job".
+=>
+mysql> SELECT concat(emp_name ,' & ', job_name) AS 'Employee & Job'  FROM employees;
++----------------------+
+| Employee & Job       |
++----------------------+
+| Mrunmai & Software   |
+| Priyanka & Technical |
+| Gajanan & Arts       |
+| Meera & Software     |
+| Pallavi & Software   |
++----------------------+
+5 rows in set (0.00 sec)
+
+
+6.) Write a query in SQL to produce the output of employees as follows.
+Employee
+Meera(manager).   
+=>
+mysql> SELECT CONCAT(emp_name,'(',job_name ,')') AS empjob from employees;
++---------------------+
+| empjob              |
++---------------------+
+| Mrunmai(Software)   |
+| Priyanka(Technical) |
+| Gajanan(Arts)       |
+| Meera(Software)     |
+| Pallavi(Software)   |
++---------------------+
+5 rows in set (0.00 sec)
+
+
+7.) From the following table, write a SQL query to count the number of characters except the spaces for each employee name. Return employee name length.
+=>
+mysql> Select length(trim(emp_name)) from employees;
++------------------------+
+| length(trim(emp_name)) |
++------------------------+
+|                      7 |
+|                      8 |
+|                      7 |
+|                      5 |
+|                      7 |
++------------------------+
+5 rows in set (0.00 sec)
+
+
+8.)From the following table, write a SQL query to find the employee ID, salary, and commission of all the employees.
+=>
+mysql> SELECT emp_id, salary, commission FROM employees;
++--------+----------+------------+
+| emp_id | salary   | commission |
++--------+----------+------------+
+|      1 | 20000.00 |    2000.00 |
+|      2 | 20000.00 |    3000.00 |
+|      3 | 30000.00 |    5000.00 |
+|      4 | 20000.00 |    2000.00 |
+|      5 | 21000.00 |    1000.00 |
++--------+----------+------------+
+5 rows in set (0.00 sec)
+
+
+9.)From the following table, write a SQL query to find the unique department with jobs. Return department ID, Job name.
+=>
+mysql> SELECT DISTINCT job_name, dept_id FROM employees;
++-----------+---------+
+| job_name  | dept_id |
++-----------+---------+
+| Software  |     101 |
+| Technical |     101 |
+| Arts      |     103 |
++-----------+---------+
+3 rows in set (0.00 sec)
+
+
+

@@ -1,0 +1,195 @@
+Table- department
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| dept_id      | int         | NO   | PRI | NULL    |       |
+| dep_name     | varchar(20) | YES  |     | NULL    |       |
+| dep_location | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+
+Table -employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+
+Table- salary_grade
+
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| grade      | int  | NO   | PRI | NULL    |       |
+| min_salary | int  | YES  |     | NULL    |       |
+| max_salary | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.28 sec)
+
+
+1.) From the following table return complete information about the employees.
+=>
+mysql> SELECT * FROM employees;
++--------+----------+-----------+------------+------------+----------+------------+---------+
+| emp_id | emp_name | job_name  | manager_id | hire_date  | salary   | commission | dept_id |
++--------+----------+-----------+------------+------------+----------+------------+---------+
+|      1 | Mrunmai  | Software  |       1101 | 2024-02-01 | 20000.00 |    2000.00 |     101 |
+|      2 | Priyanka | Technical |       1101 | 2024-02-11 | 20000.00 |    3000.00 |     101 |
+|      3 | Gajanan  | Arts      |       1102 | 2024-02-11 | 30000.00 |    5000.00 |     103 |
+|      4 | Meera    | Software  |       1101 | 2024-01-20 | 20000.00 |    2000.00 |     101 |
+|      5 | Pallavi  | Software  |       1101 | 2024-03-20 | 21000.00 |    1000.00 |     101 |
++--------+----------+-----------+------------+------------+----------+------------+---------+
+5 rows in set (0.17 sec)
+
+2.) From the following table, write a SQL query to find the salaries of all employees. Return salary.
+=>
+mysql> SELECT salary FROM employees;
++----------+
+| salary   |
++----------+
+| 20000.00 |
+| 20000.00 |
+| 30000.00 |
+| 20000.00 |
+| 21000.00 |
++----------+
+5 rows in set (0.00 sec)
+
+
+3.) Add the column to employee table
+=>
+mysql> ALTER TABLE employees ADD emp_address varchar(30);
+Query OK, 0 rows affected (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| emp_id      | int           | NO   | PRI | NULL    |       |
+| emp_name    | varchar(15)   | YES  |     | NULL    |       |
+| job_name    | varchar(10)   | YES  |     | NULL    |       |
+| manager_id  | int           | YES  |     | NULL    |       |
+| hire_date   | date          | YES  |     | NULL    |       |
+| salary      | decimal(10,2) | YES  |     | NULL    |       |
+| commission  | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id     | int           | YES  | MUL | NULL    |       |
+| emp_address | varchar(30)   | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+9 rows in set (0.09 sec)
+
+4.) Add the column using change clause
+=>
+mysql> ALTER TABLE employees CHANGE emp_address emp_email varchar(30);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
+| emp_email   | varchar(30)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+5.) Change the datatype of the column
+=>
+mysql> ALTER TABLE employees MODIFY COLUMN emp_email text;
+Query OK, 5 rows affected (0.38 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
+| emp_email   | text          | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+9 rows in set (0.09 sec)
+
+6.) Add the column constraints using modify clause
+=>
+mysql> ALTER TABLE employees MODIFY emp_email varchar(30) UNIQUE;
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
+| emp_email  | varchar(30)   | YES  | UNI | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+7.) Drop the column
+=>
+mysql> ALTER TABLE employees DROP COLUMN emp_email;
+Query OK, 0 rows affected (0.53 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+8.) How to use the ‘after keyword
+=>
+mysql> ALTER TABLE employees ADD emp_email varchar(30) AFTER emp_name;
+Query OK, 0 rows affected (0.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(15)   | YES  |     | NULL    |       |
+| emp_email  | varchar(30)   | YES  |     | NULL    |       |
+| job_name   | varchar(10)   | YES  |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| hire_date  | date          | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| commission | decimal(7,2)  | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
